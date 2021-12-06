@@ -11,6 +11,12 @@
 
 #define MAX_GRP 1001
 
+// ********************************************
+// This is a template file
+// IGNORE
+// ********************************************
+
+
 /******************************************************************************
    Unless you are interested in the details of how this program communicates
    with a subprocess, you can skip all of the code below and skip directly to
