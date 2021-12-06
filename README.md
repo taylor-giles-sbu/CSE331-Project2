@@ -1,6 +1,8 @@
 # CSE331-Project2
 CSE331 Project #2 - Stack Smashing and Format String Attacks
+
 Group Members: Taylor Giles and Shaan Khan
+
 Group ID (`GRP_ID`): 003
 
 ## Authd Exploit (Data-only attack) (driver_authd.c)
