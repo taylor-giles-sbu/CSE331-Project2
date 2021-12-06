@@ -1,21 +1,16 @@
 # CSE331-Project2
 CSE331 Project #2 - Stack Smashing and Format String Attacks
 
+## Authd Exploit
+For the values used for calculating differences, we used `gdb` to read the values of the `ebp` and `eip` registers. To get the values of the main loop and auth ra, we called the functions and used gdb to print the registers.
 
-For the top4 , used gdb to read the values of the ebp and eip.  To get the values of the main and auth ra, we had to call them and then run gdp to read the register's values.
+We used `gdb` to print the `auth_user` and `g_authd` variables to populate those values.
 
-user_varible: In gdb, printing user_variable helps you get this value.
+To locate the canary, we used `gdb` to print the contents of the stack. Using the pointers to the previous frame and the return address, we were able to approximate the location of the canary. We searched for values that did not conform to the other values on the stack, since the canary is a random value and appears differently from the majority of the rest of the values on the stack. We were able to isolate two possible locations for the canary location, and tried them both until finding the one that worked.
 
-canary: Is a random value every time, so we printed out the stack each time.  Using the old fp and ra pointer, I knew the canary had to be between (around) them.  Using gdb,I searched values near the fp and ra looking for values that looked random (not uniform) since the stack overall looks uniform.  Using this informal strategy, I narrowed down 2 possibilities and after trying both.  One worked.
+To populate the `auth_ra_loc` value, we used `gdb` to print out the contents of the stack. Since we had previously found the value of `auth_ra`, we looked for the location of that value and stored that value in `auth_ra_loc`. We used a similar strategy to populate the `auth_bp_loc` value.
 
-auth_ra_loc: Printed out the stack looking for the virtual address auth_ra.  After finding it, I recorded it in auth_ra_loc
-
-auth_bp_loc: Used a similar strategy as with searching for auth_ra_loc.
-
-g_authd_: In gdb, printing authd helped me trace this value.
-
-Finding the offset values in put_str( val1 val2 val3 ): Wrote a bruteforce python script to print every value from off 500 to off 600.
-And then matched these values with the number written down earlier.
+To find the offset values for the `put_str` command, we first wrote a Python script to print the values stored at each of the offset values from 500 to 600, using the values in the example as a reference. We found the offset for `cur_mainloop_ra` by looking for the `mainloop_ra` value we had found previously. We found the `cur_mainloop_bp` value by using `gdb`'s `info frame` function to get the current edp value, and added `0x30`. This addition was based on examination of the example exploit. To find the canary value (`cur_canary`), we looked for a random number that was in proximity to tje other 2 values. This approach was based on the sample exploit, since the offsets in that exploit were all relatively close to each other.
 
 
 
