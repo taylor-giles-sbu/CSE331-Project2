@@ -12,5 +12,5 @@ To populate the `auth_ra_loc` value, we used `gdb` to print out the contents of 
 
 To find the offset values for the `put_str` command, we first wrote a Python script to print the values stored at each of the offset values from 500 to 600, using the values in the example as a reference. We found the offset for `cur_mainloop_ra` by looking for the `mainloop_ra` value we had found previously. We found the `cur_mainloop_bp` value by using `gdb`'s `info frame` function to get the current edp value, and added `0x30`. This addition was based on examination of the example exploit. To find the canary value (`cur_canary`), we looked for a random number that was in proximity to the other 2 values. This approach was based on the sample exploit, since the offsets in that exploit were all relatively close to each other.
 
-## We did not perform any other attacks.
+#### We did not perform any other attacks.
 
