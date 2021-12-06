@@ -1,7 +1,7 @@
 # CSE331-Project2
 CSE331 Project #2 - Stack Smashing and Format String Attacks
 
-## Authd Exploit
+## Authd Exploit (Data-only attack)
 For the values used for calculating differences, we used `gdb` to read the values of the `ebp` and `eip` registers. To get the values of the main loop and auth ra, we called the functions and used gdb to print the registers.
 
 We used `gdb` to print the `auth_user` and `g_authd` variables to populate those values.
