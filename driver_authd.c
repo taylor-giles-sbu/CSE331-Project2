@@ -11,6 +11,15 @@
 
 #define MAX_GRP 1001
 
+// ********************************************
+// THIS IS THE FILE THAT WAS MODIFIED FOR THE DATA ONLY ATTACK
+//    AKA THE AUTHD EXPLOIT
+//
+// ********************************************
+
+
+
+
 /******************************************************************************
    Unless you are interested in the details of how this program communicates
    with a subprocess, you can skip all of the code below and skip directly to
