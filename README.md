@@ -1,5 +1,7 @@
 # CSE331-Project2
 CSE331 Project #2 - Stack Smashing and Format String Attacks
+Group Members: Taylor Giles and Shaan Khan
+Group ID (`GRP_ID`): 003
 
 ## Authd Exploit (Data-only attack) (driver_authd.c)
 For the values used for calculating differences, we used `gdb` to read the values of the `ebp` and `eip` registers. To get the values of the main loop and auth ra, we called the functions and used gdb to print the registers.
